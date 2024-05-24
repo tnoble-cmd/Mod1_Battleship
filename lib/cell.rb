@@ -25,6 +25,23 @@ class Cell
 
     def fire_upon
         @fired_upon = true
-        @ship.health -= 1
+        
+        if @ship
+            @ship.health -= 1
+        end
+    end
+
+    def render(reveal=false)
+        if (reveal && @ship)
+            return "S"
+        elsif (@fired_upon == true && !@ship)
+            return "M"
+        elsif (@fired_upon == true && @ship.health != 0)
+            return "H"
+        elsif (@fired_upon == true && @ship.health == 0)
+            return "X"
+        else
+            return "."
+        end
     end
 end 
