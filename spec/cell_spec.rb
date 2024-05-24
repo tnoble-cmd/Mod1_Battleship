@@ -22,7 +22,7 @@ RSpec.describe Cell do
     end
 
     describe '#place_ship' do
-        it 'places a given shape inside the cell' do
+        it 'places a given ship inside the cell' do
             @cell.place_ship(@cruiser)
             expect(@cell.ship).to eq(@cruiser)
             expect(@cell.empty?).to eq(false)
@@ -30,10 +30,12 @@ RSpec.describe Cell do
     end
 
     describe '#fired_upon?' do 
-        @cell.place_ship(@cruiser)
-        expect(@cell.fired_upon?).to eq(false)
-        @cell.fire_upon()
-        expect(@cell.ship.health).to eq(2)
-        expect(@cell.fired_upon?).to eq(true)
+        it 'knows when it has been fired upon' do
+            @cell.place_ship(@cruiser)
+            expect(@cell.fired_upon?).to eq(false)
+            @cell.fire_upon()
+            expect(@cell.ship.health).to eq(2)
+            expect(@cell.fired_upon?).to eq(true)
+        end
     end
 end
