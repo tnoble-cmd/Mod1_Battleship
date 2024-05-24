@@ -4,7 +4,7 @@ require 'pry'
 
 class Ship
 
-  attr_reader :name, :length, :health
+  attr_accessor :name, :length, :health
 
   def initialize(name, length)
     @name = name
