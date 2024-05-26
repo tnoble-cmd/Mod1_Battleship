@@ -29,6 +29,35 @@ class Board
     def valid_coordinate?(cell)
         @cells.has_key?(cell)
     end
+
+    def valid_placement?(ship, coordinates)
+        
+        def key_to_position(key)
+            row = key[0].ord - 'A'.ord
+            col = key[1..-1].to_i - 1
+            [row, col]
+        end
+        
+        hash_keys = @cells.keys
+        # indices = coordinates.map { |key| hash_keys.index(key) }
+        positions = coordinates.map { |key| key_to_position(key) }
+
+        positions.sort!
+
+        # Should make sure the number of coordinates in the array is the same
+        # as the length of the ship
+        if (ship.length == coordinates.length)
+
+            # Should make the sure the coordinates are consecutive across rows / columns
+            if (positions.each_cons(2).all? { |(r1, c1), (r2, c2) | r2 == r1 + 1 && c1 = c2 })
+                return true
+            end
+
+            return false
+        end
+
+        return false
+    end
 end
 
 # binding.pry
