@@ -27,8 +27,8 @@ class Board
     end
 
     def valid_coordinate?(cell)
-        
+        @cells.has_key?(cell)
     end
 end
 
-binding.pry
+# binding.pry
