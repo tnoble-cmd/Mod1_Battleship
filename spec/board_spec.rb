@@ -46,4 +46,20 @@ RSpec.describe Board do
             expect(@board.valid_placement?(@cruiser, ["B1", "C1", "D1"])).to eq(true)
         end
     end
+
+    describe '#place' do
+        it 'can place a ship on the board' do
+            @board.place(@cruiser, ["A1", "A2", "A3"])
+            expect(@board.cells["A1"].ship).to eq(@cruiser)
+            expect(@board.cells["A2"].ship).to eq(@cruiser)
+            expect(@board.cells["A3"].ship).to eq(@cruiser)
+            expect(@board.cells["A4"].ship).to eq(nil)
+        end
+
+        it 'cant place a ship on the board if there is a ship there already' do
+            @board.place(@cruiser, ["A1", "A2", "A3"])
+            @board.place(@submarine, ["A1", "B1"])
+            expect(@board.cells["A1"].ship).to eq(@cruiser)
+        end
+    end
 end
