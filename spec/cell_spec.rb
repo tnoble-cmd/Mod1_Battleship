@@ -14,6 +14,13 @@ RSpec.describe Cell do
             expect(@cell_1.ship).to eq(nil)
             expect(@cell_1.empty?).to eq(true)
         end
+
+        it 'can initialize' do
+            expect(@cell_2).to be_an_instance_of(Cell)
+            expect(@cell_2.coordinate).to eq('C3')
+            expect(@cell_2.ship).to eq(nil)
+            expect(@cell_2.empty?).to eq(true)
+        end
     end
 
     describe '#empty?' do
