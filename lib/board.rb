@@ -78,14 +78,13 @@ class Board
         return horizontal || vertical
     end
 
-    
+
     def render(hidden=false)
-        out = "  1 2 3 4 \n"
-        out += 'A ' + @cells['A1'].render(hidden) + @cells['A2'].render(hidden) + @cells['A3'].render(hidden) + @cells['A4'].render(hidden) + '\n'
-        out += 'B ' + @cells['B1'].render(hidden) + @cells['B2'].render(hidden) + @cells['B3'].render(hidden) + @cells['B4'].render(hidden) + '\n'
-        out += 'C ' + @cells['C1'].render(hidden) + @cells['C2'].render(hidden) + @cells['C3'].render(hidden) + @cells['C4'].render(hidden) + '\n'
-        out += 'D ' + @cells['D1'].render(hidden) + @cells['D2'].render(hidden) + @cells['D3'].render(hidden) + @cells['D4'].render(hidden) + '\n'
-        return out
+        "  1 2 3 4 \n" +
+        "A #{@cells['A1'].render(hidden)} #{@cells['A2'].render(hidden)} #{@cells['A3'].render(hidden)} #{@cells['A4'].render(hidden)} \n" +
+        "B #{@cells['B1'].render(hidden)} #{@cells['B2'].render(hidden)} #{@cells['B3'].render(hidden)} #{@cells['B4'].render(hidden)} \n" +
+        "C #{@cells['C1'].render(hidden)} #{@cells['C2'].render(hidden)} #{@cells['C3'].render(hidden)} #{@cells['C4'].render(hidden)} \n" +
+        "D #{@cells['D1'].render(hidden)} #{@cells['D2'].render(hidden)} #{@cells['D3'].render(hidden)} #{@cells['D4'].render(hidden)} \n"
     end
 
     
