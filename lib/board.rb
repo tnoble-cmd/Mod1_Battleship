@@ -1,4 +1,4 @@
-require 'cell'
+require './lib/cell'
 
 class Board
     def initialize
@@ -30,34 +30,65 @@ class Board
         @cells.has_key?(cell)
     end
 
-    def valid_placement?(ship, coordinates)
-        
-        def key_to_position(key)
-            row = key[0].ord - 'A'.ord
-            col = key[1..-1].to_i - 1
-            [row, col]
-        end
-        
-        hash_keys = @cells.keys
-        # indices = coordinates.map { |key| hash_keys.index(key) }
-        positions = coordinates.map { |key| key_to_position(key) }
-
-        positions.sort!
-
-        # Should make sure the number of coordinates in the array is the same
-        # as the length of the ship
-        if (ship.length == coordinates.length)
-
-            # Should make the sure the coordinates are consecutive across rows / columns
-            if (positions.each_cons(2).all? { |(r1, c1), (r2, c2) | r2 == r1 + 1 && c1 = c2 })
-                return true
+    def place(ship, coordinates)
+        if valid_placement?(ship, coordinates)
+            coordinates.each do |coordinate|
+                @cells[coordinate].place_ship(ship)
             end
+        end
+    end
 
+    def valid_placement?(ship, coordinates)
+
+        if ship.length != coordinates.length
             return false
         end
+        
+        coordinates.each do |coordinate|
+            if !@cells.has_key?(coordinate) || !@cells[coordinate].empty?()
+                return false
+            end        
+        end
+        
+        row = coordinates[0][0]
+        col = coordinates[0][1].to_i
 
-        return false
+        vertical = true
+
+        coordinates[1..].each do |coordinate|
+            if coordinate[0] != row || col + 1 != coordinate[1].to_i
+                vertical = false
+                break
+            end
+            col = col + 1
+        end
+
+        row = coordinates[0][0]
+        col = coordinates[0][1].to_i
+        horizontal = true
+
+        coordinates[1..].each do |coordinate|
+            if coordinate[0].ord != row.ord + 1 || col != coordinate[1].to_i
+                horizontal = false
+                break
+            end
+            row = coordinate[0]
+        end
+
+        return horizontal || vertical
     end
+
+    
+    def render(hidden=false)
+        out = "  1 2 3 4 \n"
+        out += 'A ' + @cells['A1'].render(hidden) + @cells['A2'].render(hidden) + @cells['A3'].render(hidden) + @cells['A4'].render(hidden) + '\n'
+        out += 'B ' + @cells['B1'].render(hidden) + @cells['B2'].render(hidden) + @cells['B3'].render(hidden) + @cells['B4'].render(hidden) + '\n'
+        out += 'C ' + @cells['C1'].render(hidden) + @cells['C2'].render(hidden) + @cells['C3'].render(hidden) + @cells['C4'].render(hidden) + '\n'
+        out += 'D ' + @cells['D1'].render(hidden) + @cells['D2'].render(hidden) + @cells['D3'].render(hidden) + @cells['D4'].render(hidden) + '\n'
+        return out
+    end
+
+    
 end
 
 # binding.pry
