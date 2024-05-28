@@ -106,11 +106,13 @@ class Game
             #game over? conditions
             if @computer_cruiser.sunk? && @computer_submarine.sunk?
                 puts "You win!"
+                welcome
                 break
             end
             
             if @player_cruiser.sunk? && @player_submarine.sunk?
                 puts "I win!"
+                welcome
                 break
             end
         end
