@@ -32,16 +32,34 @@ class Cell
     end
 
     def render(reveal=false)
-        if (reveal && @ship)
-            return "S"
-        elsif (@fired_upon == true && !@ship)
-            return "M"
-        elsif (@fired_upon == true && @ship.health != 0)
-            return "H"
-        elsif (@fired_upon == true && @ship.health == 0)
-            return "X"
+        if @fired_upon
+          if @ship
+            if @ship.health.zero?
+                "X"
+            else
+                "H"
+            end
+          else
+            "M"
+          end
+        elsif reveal && @ship
+            "S"
         else
-            return "."
+            "."
         end
     end
+    
+    # def render(reveal=false)
+    #     if (reveal && @ship)
+    #         return "S"
+    #     elsif (@fired_upon == true && !@ship)
+    #         return "M"
+    #     elsif (@fired_upon == true && @ship.health != 0)
+    #         return "H"
+    #     elsif (@fired_upon == true && @ship.health == 0)
+    #         return "X"
+    #     else
+    #         return "."
+    #     end
+    # end
 end 
