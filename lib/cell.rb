@@ -35,17 +35,17 @@ class Cell
         if @fired_upon
           if @ship
             if @ship.health.zero?
-              "X"
+                "X"
             else
-              "H"
+                "H"
             end
           else
             "M"
           end
         elsif reveal && @ship
-          "S"
+            "S"
         else
-          "."
+            "."
         end
     end
     

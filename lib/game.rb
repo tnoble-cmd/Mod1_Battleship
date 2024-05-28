@@ -1,8 +1,9 @@
 class Game
-
+    attr_reader :player_board, :computer_board, :player_cruiser, :player_submarine, :computer_cruiser, :computer_submarine, :restart
     def initialize
-        @players = []
+        @computer_shots = ["A1", "A2", "A3", "A4", "B1", "B2", "B3", "B4", "C1", "C2", "C3", "C4", "D1", "D2", "D3", "D4"]
     end
+
 
     def welcome
         #welcome message
@@ -42,7 +43,6 @@ class Game
         @player_board = Board.new
         @player_cruiser = Ship.new("Cruiser", 3)
         @player_submarine = Ship.new("Submarine", 2)
-
         #prompt player to place ships
         puts "I have laid out my ships on the grid."
         puts "You now need to lay out your two ships."
@@ -76,5 +76,43 @@ class Game
         end
         
         puts @player_board.render(true)
+        player_turn
+    end
+
+    def player_turn
+        #turn loop
+        loop do
+            puts "=============COMPUTER BOARD============="
+            puts @computer_board.render
+            puts "==============PLAYER BOARD=============="
+            puts @player_board.render(true)
+            puts "Enter the coordinate for your shot:"
+            player_shot = gets.chomp
+            if !@computer_board.valid_coordinate?(player_shot)
+                puts "Invalid input. Please try again."
+            elsif @computer_board.cells[player_shot].fired_upon?
+                puts "You have already fired on this cell. Please try again."
+            else
+                @computer_board.cells[player_shot].fire_upon
+                puts "Your shot on #{player_shot} was a #{computer_board.cells[player_shot].render}."
+            end
+
+            #computer shot
+            computer_shot = @computer_shots.sample
+            @player_board.cells[computer_shot].fire_upon
+            puts "My shot on #{computer_shot} was a #{player_board.cells[computer_shot].render}."
+            @computer_shots.delete(computer_shot)
+            
+            #game over? conditions
+            if @computer_cruiser.sunk? && @computer_submarine.sunk?
+                puts "You win!"
+                break
+            end
+            
+            if @player_cruiser.sunk? && @player_submarine.sunk?
+                puts "I win!"
+                break
+            end
+        end
     end
 end
