@@ -4,7 +4,7 @@
 
 #To Run the game:
 
-- Go to your terminal > Ruby runner.rb > hit "enter"
+- Go to your terminal > Ruby spec/runner.rb > hit "enter"
 
 ###Iteration 3 did not provide an interaction pattern. How did you approach designing this iteration? If you did not get to Iteration 3, reflect on how you think you would’ve approached the design and problem solving process.
 
