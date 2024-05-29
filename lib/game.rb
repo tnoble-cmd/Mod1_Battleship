@@ -1,7 +1,8 @@
 class Game
-    attr_reader :player_board, :computer_board, :player_cruiser, :player_submarine, :computer_cruiser, :computer_submarine, :restart
+    attr_reader :player_board, :computer_board, :player_cruiser, :player_submarine, :computer_cruiser, :computer_submarine, :restart, :computer_shots, :computer_ships
     def initialize
         @computer_shots = ["A1", "A2", "A3", "A4", "B1", "B2", "B3", "B4", "C1", "C2", "C3", "C4", "D1", "D2", "D3", "D4"]
+        @computer_ships = []
     end
 
 
@@ -26,14 +27,27 @@ class Game
         end
     end
 
+    def computer_random_placement(ship)
+        #random placement loop
+        loop do
+            random_placement = @computer_board.cells.keys.sample(ship.length)
+            if @computer_board.valid_placement?(ship, random_placement)
+                @computer_board.place(ship, random_placement)
+                @computer_ships << random_placement
+                break
+            end
+        end
+    end
+
+
     def computer_ship_placement
         #computer instance
         @computer_board = Board.new
         @computer_cruiser = Ship.new("Cruiser", 3)
         @computer_submarine = Ship.new("Submarine", 2)
         #computer ship placement
-        @computer_board.place(@computer_cruiser, ["A4", "B4", "C4"])
-        @computer_board.place(@computer_submarine, ["C1", "D1"])
+        computer_random_placement(@computer_cruiser)
+        computer_random_placement(@computer_submarine)
         #after computer placement, player ship placement starts
         player_ship_placement
     end
@@ -52,7 +66,7 @@ class Game
 
         #cruiser loop
         loop do
-            cruiser_input = gets.chomp.split(" ")
+            cruiser_input = gets.upcase.chomp.split(" ")
             if @player_board.valid_placement?(@player_cruiser, cruiser_input)
                 @player_board.place(@player_cruiser, cruiser_input)
                 break
@@ -60,13 +74,14 @@ class Game
                 puts "Invalid input. Please try again."
             end
         end
+
         #submarine placement
         puts @player_board.render(true)
         puts "Enter the squares for the Submarine (2 spaces):"
         
         #submarine loop
         loop do
-            submarine_input = gets.chomp.split(" ")
+            submarine_input = gets.upcase.chomp.split(" ")
             if @player_board.valid_placement?(@player_submarine, submarine_input)
                 @player_board.place(@player_submarine, submarine_input)
                 break
@@ -87,7 +102,7 @@ class Game
             puts "==============PLAYER BOARD=============="
             puts @player_board.render(true)
             puts "Enter the coordinate for your shot:"
-            player_shot = gets.chomp
+            player_shot = gets.upcase.chomp
             if !@computer_board.valid_coordinate?(player_shot)
                 puts "Invalid input. Please try again."
             elsif @computer_board.cells[player_shot].fired_upon?
@@ -106,6 +121,7 @@ class Game
             #game over? conditions
             if @computer_cruiser.sunk? && @computer_submarine.sunk?
                 puts "You win!"
+                welcome
                 break
             end
             
