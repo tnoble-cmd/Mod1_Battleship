@@ -127,6 +127,7 @@ class Game
             
             if @player_cruiser.sunk? && @player_submarine.sunk?
                 puts "I win!"
+                welcome
                 break
             end
         end
