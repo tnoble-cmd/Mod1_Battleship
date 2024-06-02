@@ -6,6 +6,8 @@
 
 - Go to your terminal > Ruby spec/runner.rb > hit "enter"
 
+- Follow the corresponding prompts to play! Regular battleship rules apply.
+
 ###Iteration 3 did not provide an interaction pattern. How did you approach designing this iteration? If you did not get to Iteration 3, reflect on how you think you would’ve approached the design and problem solving process.
 
 - Iteration 3's lack of interaction pattern helped pave the way for creativity. It also allowed us to follow the given instructions and we were to interpret them to create our own code for how the game should work. This helped solidify our need for being able to follow written instructions to create something that will in fact work.  
